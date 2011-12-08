@@ -8,6 +8,8 @@ requires 'HTML::StickyQuery';
 tests 't/*.t';
 
 test_requires 'Test::More';
-auto_set_repository;
 auto_include;
+resources
+    license     => "http://dev.perl.org/licenses",
+    repository  => "https://github.com/s-aska/p5-Plack-Session-State-URI";
 WriteAll;
