@@ -58,7 +58,7 @@ sub redirect_filter {
     my $path = $h->get('Location');
     my $uri = URI->new($path);
     $uri->query_form( $uri->query_form, $self->session_key, $id );
-    return $uri->as_string;
+    $h->set('Location', $uri->as_string);
 }
 
 1;
