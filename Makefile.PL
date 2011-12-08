@@ -8,6 +8,8 @@ requires 'HTML::StickyQuery';
 tests 't/*.t';
 
 test_requires 'Test::More';
+test_requires 'HTTP::Request::Common';
+
 auto_include;
 resources
     license     => "http://dev.perl.org/licenses",
