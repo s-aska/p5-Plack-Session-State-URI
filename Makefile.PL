@@ -3,6 +3,7 @@ name 'Plack-Session-State-URI';
 all_from 'lib/Plack/Session/State/URI.pm';
 
 requires 'Plack';
+requires 'Plack::Middleware::Session';
 requires 'HTML::StickyQuery';
 
 tests 't/*.t';
