@@ -1,7 +1,7 @@
 package Plack::Session::State::URI;
 use strict;
 use warnings;
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use parent 'Plack::Session::State';
 use Plack::Request;
@@ -28,7 +28,7 @@ sub finalize {
 
 sub html_filter {
     my ($self, $id, $res) = @_;
-    
+
     return if (ref $res->[2]) ne 'ARRAY';
 
     my $encode = 'utf8';

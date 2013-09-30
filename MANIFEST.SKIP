@@ -19,3 +19,7 @@
 ^\.shipit$
 ^\.git/
 \.sw[po]$
+\.gitignore
+cpanfile\.snapshot
+local
+MYMETA
