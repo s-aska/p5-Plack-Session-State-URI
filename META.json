@@ -44,7 +44,8 @@
          "requires" : {
             "HTML::StickyQuery" : "0",
             "Plack" : "0",
-            "Plack::Middleware::Session" : "0"
+            "Plack::Middleware::Session" : "0",
+            "perl" : "5.008001"
          }
       },
       "test" : {
@@ -66,7 +67,7 @@
          "web" : "https://github.com/s-aska/p5-Plack-Session-State-URI"
       }
    },
-   "version" : "0.05",
+   "version" : "0.06",
    "x_authority" : "cpan:ASKADNA",
    "x_contributors" : [
       "Steffen Schwigon <ss5@renormalist.net>",

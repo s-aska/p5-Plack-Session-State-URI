@@ -2,6 +2,9 @@ Revision history for Perl extension Plack::Session::State::URI
 
 {{$NEXT}}
 
+0.06 2013-10-01T03:52:14Z
+        - added metayml_declares_perl_version
+
 0.05 2013-10-01T03:35:21Z
         - minil migrate
 
