@@ -1,6 +1,5 @@
 cover_db
 META.yml
-META.json
 Makefile
 blib
 inc
@@ -14,3 +13,10 @@ MANIFEST.bak
 MYMETA.*
 cpanfile.snapshot
 local
+/Plack-Session-State-URI-*
+/.build
+/_build_params
+/Build
+!Build/
+!META.json
+!LICENSE

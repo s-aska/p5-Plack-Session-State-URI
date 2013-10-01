@@ -1,10 +1,15 @@
 Revision history for Perl extension Plack::Session::State::URI
 
-0.04    Mon Sep 30 15:33:45 JST 2013
+{{$NEXT}}
+
+0.05 2013-10-01T03:35:21Z
+        - minil migrate
+
+0.04 2013-07-30T06:33:45Z
         - remove MYMETA and .gitignore (charsbar)
 
-0.03    Wed Feb 27 11:46:17 JST 2013
+0.03 2013-02-27T02:46:17Z
         - fix bug 'tempdir' can't be called as a method at t/01_uri.t line 12.
 
-0.01    Wed Dec  7 19:43:42 2011
+0.01 2011-12-07T10:43:42Z
         - original version
