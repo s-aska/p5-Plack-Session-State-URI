@@ -5,22 +5,26 @@ Plack::Session::State::URI - uri-based session state
 
 # SYNOPSIS
 
+    use File::Temp qw/tempdir/;
     use Plack::Builder;
     use Plack::Session::Store::File;
     use Plack::Session::State::URI;
 
     my $app = sub {
-        return [ 200, [ 'Content-Type' => 'text/plain' ], [ 'Hello Foo' ] ];
+        return [
+            200,
+            ['Content-Type' => 'text/plain'],
+            ['Hello Foo']
+        ];
     };
 
     builder {
-        enable 'Plack::Middleware::Session',
-            store => Plack::Session::Store::File->new(
-                dir => File::Temp->tempdir( 'XXXXXXXX', TMPDIR => 1, CLEANUP => 1 )
-            ),
-            state => Plack::Session::State::URI->new(
-                session_key => 'sid'
-            );
+        my $tmpdir = tempdir('XXXXXXXX', CLEANUP => 1, TMPDIR => 1);
+        my $store = Plack::Session::Store::File->new(dir => $tmpdir);
+        my $state = Plack::Session::State::URI->new(session_key => 'sid');
+
+        enable 'Session', store => $store, state => $state;
+
         $app;
     };
 
