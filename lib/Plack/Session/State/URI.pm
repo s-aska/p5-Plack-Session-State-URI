@@ -9,6 +9,7 @@ use HTML::StickyQuery;
 use Plack::Request;
 use Plack::Util;
 
+our $DefaultEncoding = 'utf8';
 our $VERSION = '0.06';
 
 sub get_session_id {
@@ -34,17 +35,12 @@ sub html_filter {
 
     return if (ref $res->[2]) ne 'ARRAY';
 
-    my $encode = 'utf8';
     my $h = Plack::Util::headers($res->[1]);
-
-    if ($h->get('Content-Type') =~ m|^text/\w+;\s*charset="?([^"]+)"?|i) {
-        $encode = $1;
-    }
-
     my $body = _get_body($res);
+    my $encoding = _parse_encoding($h);
     my $name = $self->session_key;
 
-    $body = Encode::decode($encode, $body);
+    $body = Encode::decode($encoding, $body);
 
     $body =~ s{(<form\s*.*?>)}{$1\n<input type="hidden" name="$name" value="$id" />}isg;
 
@@ -55,7 +51,9 @@ sub html_filter {
         param     => { $name => $id }
     );
 
-    $res->[2] = [ Encode::encode($encode, $body) ];
+    $body = Encode::encode($encoding, $body);
+
+    $res->[2] = [$body];
 }
 
 sub redirect_filter {
@@ -78,6 +76,18 @@ sub _get_body {
     }
 
     return $body;
+}
+
+sub _parse_encoding {
+    my ($h) = @_;
+
+    my $content_type = $h->get('Content-Type');
+
+    if ($content_type =~ m|^text/\w+;\s*charset="?([^"]+)"?|i) {
+        return $1;
+    }
+
+    return $DefaultEncoding;
 }
 
 1;
