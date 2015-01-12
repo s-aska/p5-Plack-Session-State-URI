@@ -73,7 +73,6 @@ sub redirect_filter {
 }
 
 1;
-__END__
 
 =head1 NAME
 
