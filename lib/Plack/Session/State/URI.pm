@@ -38,18 +38,10 @@ sub html_filter {
     my $h = Plack::Util::headers($res->[1]);
     my $body = _get_body($res);
     my $encoding = _parse_encoding($h);
-    my $name = $self->session_key;
 
     $body = Encode::decode($encoding, $body);
 
-    $body =~ s{(<form\s*.*?>)}{$1\n<input type="hidden" name="$name" value="$id" />}isg;
-
-    my $sticky = HTML::StickyQuery->new;
-
-    $body = $sticky->sticky(
-        scalarref => \$body,
-        param     => { $name => $id }
-    );
+    $body = $self->_html_filter_body($body, $id);
 
     $body = Encode::encode($encoding, $body);
 
@@ -74,6 +66,23 @@ sub _get_body {
     for my $line (@{ $res->[2] }) {
         $body .= $line if length $line;
     }
+
+    return $body;
+}
+
+sub _html_filter_body {
+    my ($self, $body, $id) = @_;
+
+    my $name = $self->session_key;
+
+    $body =~ s{(<form\s*.*?>)}{$1\n<input type="hidden" name="$name" value="$id" />}isg;
+
+    my $sticky = HTML::StickyQuery->new;
+
+    $body = $sticky->sticky(
+        scalarref => \$body,
+        param     => { $name => $id }
+    );
 
     return $body;
 }
