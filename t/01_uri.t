@@ -9,13 +9,16 @@ use Plack::Test;
 use Test::More;
 
 my $app = builder {
-    enable 'Plack::Middleware::Session',
-        store => Plack::Session::Store::File->new(
-            dir => File::Temp->newdir( 'XXXXXXXX', TMPDIR => 1, CLEANUP => 1, TEMPDIR => 1 )
-        ),
-        state => Plack::Session::State::URI->new(
-            session_key => 'sid'
-        );
+    my $dir = File::Temp->newdir('XXXXXXXX',
+            CLEANUP => 1,
+            TEMPDIR => 1,
+            TMPDIR => 1);
+
+    my $store = Plack::Session::Store::File->new(dir => $dir),
+    my $state = Plack::Session::State::URI->new(session_key => 'sid');
+
+    enable 'Session', store => $store, state => $state;
+
     sub {
         my ($env) = @_;
         my $req = Plack::Request->new($env);
