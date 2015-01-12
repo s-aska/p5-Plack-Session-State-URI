@@ -41,14 +41,11 @@ sub html_filter {
         $encode = $1;
     }
 
+    my $body = _get_body($res);
     my $name = $self->session_key;
-    my $body = '';
-
-    for my $line (@{ $res->[2] }) {
-        $body .= $line if length $line;
-    }
 
     $body = Encode::decode($encode, $body);
+
     $body =~ s{(<form\s*.*?>)}{$1\n<input type="hidden" name="$name" value="$id" />}isg;
 
     my $sticky = HTML::StickyQuery->new;
@@ -70,6 +67,17 @@ sub redirect_filter {
 
     $uri->query_form( $uri->query_form, $self->session_key, $id );
     $h->set('Location', $uri->as_string);
+}
+
+sub _get_body {
+    my ($res) = @_;
+    my $body = '';
+
+    for my $line (@{ $res->[2] }) {
+        $body .= $line if length $line;
+    }
+
+    return $body;
 }
 
 1;
