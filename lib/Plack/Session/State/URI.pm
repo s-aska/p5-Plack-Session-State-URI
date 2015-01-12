@@ -13,6 +13,7 @@ our $VERSION = '0.06';
 
 sub get_session_id {
     my ($self, $env) = @_;
+
     Plack::Request->new($env)->param($self->session_key);
 }
 
@@ -35,21 +36,28 @@ sub html_filter {
 
     my $encode = 'utf8';
     my $h = Plack::Util::headers($res->[1]);
+
     if ($h->get('Content-Type') =~ m|^text/\w+;\s*charset="?([^"]+)"?|i) {
         $encode = $1;
     }
+
     my $name = $self->session_key;
     my $body = '';
+
     for my $line (@{ $res->[2] }) {
         $body .= $line if length $line;
     }
+
     $body = Encode::decode($encode, $body);
     $body =~ s{(<form\s*.*?>)}{$1\n<input type="hidden" name="$name" value="$id" />}isg;
+
     my $sticky = HTML::StickyQuery->new;
+
     $body = $sticky->sticky(
         scalarref => \$body,
         param     => { $name => $id }
     );
+
     $res->[2] = [ Encode::encode($encode, $body) ];
 }
 
@@ -59,6 +67,7 @@ sub redirect_filter {
     my $h = Plack::Util::headers($res->[1]);
     my $path = $h->get('Location');
     my $uri = URI->new($path);
+
     $uri->query_form( $uri->query_form, $self->session_key, $id );
     $h->set('Location', $uri->as_string);
 }
