@@ -1,12 +1,12 @@
+use File::Temp;
 use HTTP::Request::Common;
 use Plack::Builder;
 use Plack::Request;
-use Plack::Session;
 use Plack::Session::State::URI;
 use Plack::Session::Store::File;
+use Plack::Session;
 use Plack::Test;
 use Test::More;
-use File::Temp;
 
 my $app = builder {
     enable 'Plack::Middleware::Session',
