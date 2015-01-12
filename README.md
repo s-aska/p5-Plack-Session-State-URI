@@ -6,13 +6,14 @@ Plack::Session::State::URI - uri-based session state
 # SYNOPSIS
 
     use File::Temp qw/tempdir/;
+    use HTTP::Status qw/HTTP_OK/;
     use Plack::Builder;
     use Plack::Session::Store::File;
     use Plack::Session::State::URI;
 
     my $app = sub {
         return [
-            200,
+            HTTP_OK,
             ['Content-Type' => 'text/plain'],
             ['Hello Foo']
         ];
