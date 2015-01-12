@@ -17,7 +17,7 @@ my $app = builder {
             session_key => 'sid'
         );
     sub {
-        my $env = shift;
+        my ($env) = @_;
         my $req = Plack::Request->new($env);
         my $session = Plack::Session->new($env);
 
@@ -46,7 +46,7 @@ my $app = builder {
 };
 
 test_psgi $app, sub {
-    my $cb = shift;
+    my ($cb) = @_;
 
     my $data = 'param1';
 
