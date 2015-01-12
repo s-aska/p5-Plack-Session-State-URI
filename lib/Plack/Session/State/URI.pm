@@ -52,8 +52,8 @@ sub redirect_filter {
     my ($self, $id, $res) = @_;
 
     my $h = Plack::Util::headers($res->[1]);
-    my $path = $h->get('Location');
-    my $uri = URI->new($path);
+    my $loc = $h->get('Location');
+    my $uri = URI->new($loc);
 
     $uri->query_form( $uri->query_form, $self->session_key, $id );
     $h->set('Location', $uri->as_string);
