@@ -35,7 +35,7 @@ sub html_filter {
 
     my $encode = 'utf8';
     my $h = Plack::Util::headers($res->[1]);
-    if ($h->get('Content-Type')=~m|^text/\w+;\s*charset="?([^"]+)"?|i) {
+    if ($h->get('Content-Type') =~ m|^text/\w+;\s*charset="?([^"]+)"?|i) {
         $encode = $1;
     }
     my $name = $self->session_key;

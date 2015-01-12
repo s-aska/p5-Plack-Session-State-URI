@@ -51,22 +51,22 @@ test_psgi $app, sub {
     my $data = 'param1';
 
     my $res = $cb->(GET '/?data=' . $data);
-    my ($sid) = $res->content=~m|sid=(\w+)|;
+    my ($sid) = $res->content =~ m|sid=(\w+)|;
     ok $sid, 'sid generate.';
 
     my $res2 = $cb->(GET '/?sid=' . $sid);
-    my ($sid2) = $res2->content=~m|sid=(\w+)|;
+    my ($sid2) = $res2->content =~ m|sid=(\w+)|;
     is $sid, $sid2, 'sid equal.';
 
-    my ($data2) = $res2->content=~m|<p>(.*)</p>|;
+    my ($data2) = $res2->content =~ m|<p>(.*)</p>|;
     is $data, $data2, 'data equal.';
 
     my $res3 = $cb->(GET '/?url=http://example.org/&sid=' . $sid);
-    my ($sid3) = $res3->header('Location')=~m|sid=(\w+)|;
+    my ($sid3) = $res3->header('Location') =~ m|sid=(\w+)|;
     is $sid, $sid3, 'sid equal. (redirect)';
 
     my $res4 = $cb->(GET '/');
-    my ($sid4) = $res4->content=~m|sid=(\w+)|;
+    my ($sid4) = $res4->content =~ m|sid=(\w+)|;
     isnt $sid, $sid4, 'new sid generate.'
 };
 
