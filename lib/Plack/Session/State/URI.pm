@@ -1,13 +1,15 @@
 package Plack::Session::State::URI;
-use strict;
-use warnings;
-our $VERSION = '0.06';
 
 use parent 'Plack::Session::State';
-use Plack::Request;
-use Plack::Util;
+use strict;
+use warnings;
+
 use Encode ();
 use HTML::StickyQuery;
+use Plack::Request;
+use Plack::Util;
+
+our $VERSION = '0.06';
 
 sub get_session_id {
     my ($self, $env) = @_;
