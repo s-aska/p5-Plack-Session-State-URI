@@ -74,8 +74,9 @@ sub _html_filter_body {
     my ($self, $body, $id) = @_;
 
     my $name = $self->session_key;
+    my $input = qq{<input type="hidden" name="$name" value="$id" />};
 
-    $body =~ s{(<form\s*.*?>)}{$1\n<input type="hidden" name="$name" value="$id" />}isg;
+    $body =~ s{(<form\s*.*?>)}{$1\n}isg;
 
     my $sticky = HTML::StickyQuery->new;
 
