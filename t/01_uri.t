@@ -1,3 +1,6 @@
+use strict;
+use warnings;
+
 use File::Temp;
 use HTTP::Request::Common;
 use Plack::Builder;
