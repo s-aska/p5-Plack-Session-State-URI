@@ -14,6 +14,7 @@ MYMETA.*
 cpanfile.snapshot
 local
 /Plack-Session-State-URI-*
+/_build
 /.build
 /_build_params
 /Build
