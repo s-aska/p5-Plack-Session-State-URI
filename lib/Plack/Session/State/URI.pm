@@ -6,6 +6,7 @@ use warnings;
 
 use Encode ();
 use HTML::StickyQuery;
+use HTTP::Status qw/HTTP_FOUND HTTP_OK/;
 use Plack::Request;
 use Plack::Util;
 
@@ -23,9 +24,9 @@ sub finalize {
 
     return unless $id;
 
-    if ($res->[0] == 200) {
+    if ($res->[0] == HTTP_OK) {
         $self->html_filter($id, $res);
-    } elsif ($res->[0] == 302) {
+    } elsif ($res->[0] == HTTP_FOUND) {
         $self->redirect_filter($id, $res);
     }
 }
@@ -109,13 +110,14 @@ Plack::Session::State::URI - uri-based session state
 =head1 SYNOPSIS
 
   use File::Temp qw/tempdir/;
+  use HTML::Status qw/HTTP_OK/;
   use Plack::Builder;
   use Plack::Session::Store::File;
   use Plack::Session::State::URI;
 
   my $app = sub {
       return [
-          200,
+          HTTP_OK,
           ['Content-Type' => 'text/plain'],
           ['Hello Foo']
       ];

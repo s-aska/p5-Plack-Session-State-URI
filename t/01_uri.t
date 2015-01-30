@@ -3,6 +3,7 @@ use warnings;
 
 use File::Temp;
 use HTTP::Request::Common;
+use HTTP::Status qw/HTTP_FOUND HTTP_OK/;
 use Plack::Builder;
 use Plack::Request;
 use Plack::Session::State::URI;
@@ -37,13 +38,13 @@ my $app = builder {
 
         if (my $url = $req->param('url')) {
             [
-                302,
+                HTTP_FOUND,
                 ['Location', $url],
                 ['']
             ];
         } else {
             [
-                200,
+                HTTP_OK,
                 ['Content-Type', 'text/html; charset="UTF-8"'],
                 [qq{<a href="/?foo=1">ok</a><p>$data</p>}]
             ]
